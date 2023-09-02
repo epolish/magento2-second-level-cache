@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
+    <type name="entities_cache" translate="label,description" instance="Magento2\SecondLevelCache\Model\Cache\Type\EntitySecondLevel">
+        <label>Entities Cache</label>
+        <description>Second Level Cache For Magento Entities (product, customer, order etc.)</description>
+    </type>
+</config>

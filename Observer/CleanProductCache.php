@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Magento2\SecondLevelCache\Plugin;
+namespace Magento2\SecondLevelCache\Observer;
 
-use Closure;
-use Magento\Catalog\Model\Product as ProductModel;
-use Magento2\SecondLevelCache\Model\Cache\Product as ProductCache;
+use Magento\Framework\Event\Observer;
+use Magento\Framework\Event\ObserverInterface;
 use Magento2\SecondLevelCache\Model\Cache\EntityKeyResolver;
+use Magento2\SecondLevelCache\Model\Cache\Product as ProductCache;
 use Magento2\SecondLevelCache\Model\Cache\EntityKeyResolverFactory;
 
-class Product
+class CleanProductCache implements ObserverInterface
 {
     private $productCache;
 
@@ -23,24 +23,17 @@ class Product
         $this->entityKeyResolverFactory = $entityKeyResolverFactory;
     }
 
-    public function aroundLoad(ProductModel $product, Closure $proceed, $modelId, $field = null)
+    public function execute(Observer $observer)
     {
+        $product = $observer->getProduct();
+
         /** @var EntityKeyResolver $entityKeyResolver */
         $entityKeyResolver = $this->entityKeyResolverFactory->create();
 
-        $entityKeyResolver->setField($field);
-        $entityKeyResolver->setModelId((string)$modelId);
+        $entityKeyResolver->setField('id');
+        $entityKeyResolver->setModelId($product->getEntityId());
         $entityKeyResolver->setSourceEntity($product);
 
-        if ($this->productCache->loadEntity($entityKeyResolver)) {
-            return $product;
-        }
-
-        $product = $proceed($modelId, $field);
-
-        $entityKeyResolver->setSourceEntity($product);
-        $this->productCache->saveEntity($entityKeyResolver);
-
-        return $product;
+        $this->productCache->cleanEntity($entityKeyResolver);
     }
 }
