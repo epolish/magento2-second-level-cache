@@ -15,7 +15,7 @@ abstract class AbstractCache implements CacheInterface
     private $jsonSerializer;
 
     public function __construct(
-        CacheInterface $cache,
+        EntitySecondLevel $cache,
         JsonSerializer $jsonSerializer
     ) {
         $this->cache = $cache;
