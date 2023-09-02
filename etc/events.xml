@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="catalog_product_save_after">
-        <observer name="webkul_testmodule_add_custom_option" instance="Magento2\SecondLevelCache\Observer\CleanProductCache" />
+        <observer name="magento2SecondLevelCacheObserverCleanProductCache" instance="Magento2\SecondLevelCache\Observer\CleanProductCache" />
     </event>
 </config>
