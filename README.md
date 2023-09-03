@@ -1,5 +1,14 @@
 # magento2-second-level-cache
 
+bin/magento c:cl was disabled for this cache to keep it in a warm state
+
+HowTo remove this cache:
+Select the single entities_cache type in an admin panel. Or:
+```bash
+$ bin/magento c:f
+$ bin/magento c:cl entities_cache
+```
+
 How to add an entity to cache (frontend area)
 
 ```xml
